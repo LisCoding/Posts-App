@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Posts</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="  https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+
+  <body>
+    <h1>My Posts!</h1>
+    <div class="content">
+      <div id="sticky_notes">
+
+      </div>
+    </div>
+    <p>Add a note</p>
+    <form id="create_post" class="" action="/create" method="post">
+      {% csrf_token %}
+    <textarea name="post" value=""></textarea>
+    <input type="submit" name="" value="Post it">
+    </form>
+
+    <script>
+    $("#create_post").submit(function (e) {
+      e.preventDefault()
+      $.ajax({
+        url:$(this).attr("action"),
+        method:'post',
+        data:$(this).serialize(),
+        success: function (serverResponse) {
+          $('#sticky_notes').html(serverResponse)
+        }
+      })
+    })
+
+    </script>
+  </body>
+</html>
